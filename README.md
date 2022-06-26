@@ -11,4 +11,4 @@ The code was written by [Suraj J. Unni](https://github.com/surajjunni). Specific
 The code depends on the following implementations:
 * Python 3.8
 * [NetworKit](https://networkit.github.io/) 7.1
-* [Pandas] (https://pandas.pydata.org/) 1.4.3
+* [Pandas](https://pandas.pydata.org/) 1.4.3
