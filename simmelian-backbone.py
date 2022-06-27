@@ -59,7 +59,7 @@ def union(vertice1, vertice2,parent,rank):
         if rank[root1] == rank[root2]:
             rank[root2] += 1 
 
-def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
+def redundancy(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
 
     #mapping nodes
     node=dict()
@@ -219,17 +219,17 @@ if __name__ == "__main__":
     start_time = time.time()
     warnings.filterwarnings("ignore")
     parser = optparse.OptionParser()
-    parser.add_option('--edgelist', action="store", dest="data", default="input.txt", type="string")
-    parser.add_option('--method', action="store", dest="method",choices=("triadic","quadrilateral"), default="triadic")
+    parser.add_option('--edgelist', action="store", dest="data", default="input.csv", type="string")
+    parser.add_option('--method', action="store", dest="method",choices=("triadic","quadrilateral"), default="quadrilateral")
     parser.add_option('--threshold', action="store", dest="mthreshold", default="0.2", type="string")
     parser.add_option('--multiedges', action="store", dest="multiedges",choices=("yes","no"),default="no")
     parser.add_option('--connectivity', action="store", dest="connectivity", choices=("maintain","ignore"),default="maintain")
     parser.add_option('--prune', action="store", dest="prune", choices=("yes","no"),default="no")
-    parser.add_option('--outputlist', action="store", dest="output", default="visone-quad-analysis.csv", type="string")
+    parser.add_option('--outputlist', action="store", dest="output", default="backbone.csv", type="string")
     options, args = parser.parse_args()
     
     path = options.data
-    df=pd.read_csv(path, sep="\t")
+    df=pd.read_csv(path)
     outputfile=options.output
     data=df.values.tolist()
     method=options.method
@@ -237,7 +237,7 @@ if __name__ == "__main__":
     connectivity=options.connectivity
     prune=options.prune
     threshold=float(options.mthreshold)
-    t = Thread(target=func, args=(data,method,multiedges,connectivity,threshold,df,prune,outputfile,))
+    t = Thread(target=redundancy, args=(data,method,multiedges,connectivity,threshold,df,prune,outputfile,))
     #p = Process(target=func, args=(data,method,multiedges,connectivity,threshold,df,))
     #func(data,method,multiedges,connectivity,threshold,df)
     t.start()
