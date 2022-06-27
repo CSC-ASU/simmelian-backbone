@@ -15,3 +15,5 @@ The code depends on the following implementations:
 
 ## Running the Code
 The code assumes as input an edgelist in .csv format. The first two columns of the .csv must contain two node labels that define the edge. Additional columns may contain additional edge-related atrributes (such as weight) but these are not considered in the calculations. The script will write to STDOUT all of the edges' input values with calculated backbone values added, depending on options selected.
+
+![image](simmelian.jpg)
