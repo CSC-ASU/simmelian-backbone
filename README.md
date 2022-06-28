@@ -1,7 +1,7 @@
 # simmelian-backbone
 Python code to calculate a Simmelian backbone from a network edgelist
 ## Overview
-This software implemenets an Simmelian backbone network analysis as described by [Nick, Lee, Cunningham, and Brandes](https://www.researchgate.net/publication/262207813_Simmelian_backbones_amplifying_hidden_homophily_in_Facebook_networks) in 2013. The method has an almost magical ability to untangle "hairball" networks by removing links that are not part of embedded relationships.
+This software implemenets an Simmelian backbone network analysis as described by [Nick, Lee, Cunningham, and Brandes](https://www.researchgate.net/publication/262207813_Simmelian_backbones_amplifying_hidden_homophily_in_Facebook_networks) in 2013. The method has an almost magical ability to untangle "hairball" networks by removing links that are not part of embedded relationships. The effect is apparent in the figure from the Nick, et al., paper showing a large Facebook friends network:
 
 ![image](simmelian.jpg)
 
