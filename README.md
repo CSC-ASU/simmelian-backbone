@@ -9,7 +9,7 @@ Prior to this implementation, the analysis was only available in [Visone](https:
 
 ## Credits
 
-Code written by [Suraj J. Unni](https://github.com/surajjunni). Specifications and testing by [Steve Corman](https://github.com/networks1). We thank [Julian Müller](https://sn.ethz.ch/profile.html?persid=243533) and [Ulrik Brandes](https://github.com/ubrandes-ethz) of the Visone team for sharing Visone code and consulting about implementing the method.
+Code written by [Suraj J. Unni](https://github.com/surajjunni). Specifications and testing by [Steve Corman](https://github.com/networks1). We thank [Julian Müller](https://sn.ethz.ch/profile.html?persid=243533) and [Ulrik Brandes](https://github.com/ubrandes-ethz) of the Visone team for sharing code and consulting about implementing the method.
 
 ## Dependencies
 The code depends on the following implementations:
