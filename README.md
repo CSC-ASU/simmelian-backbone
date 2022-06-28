@@ -13,7 +13,23 @@ The code was written by [Suraj J. Unni](https://github.com/surajjunni). Specific
 The code depends on the following implementations:
 * Python 3.8
 * [NetworKit](https://networkit.github.io/) 7.1
+* [Numpy](https://pypi.org/project/numpy/) 1.23.0
 * [Pandas](https://pandas.pydata.org/) 1.4.3
 
 ## Running the Code
 The code assumes as input an edgelist in .csv format. The first two columns of the .csv must contain two node labels that define the edge. Additional columns may contain additional edge-related atrributes (such as weight) but these are not considered in the calculations. The script will write to STDOUT all of the edges' input values with calculated backbone values added, depending on options selected.
+To run the script:
+>python3 backbone.py [--argument1=value, --argument2=value ...]
+
+Where:
+Argument | Description | Options | Default
+--- | --- | --- | ---
+edgelist | File containing the input edgelist formatted as discussed above. Analysis assumes network is undirected. | Valid path/filename | input.csv
+method | Option to calculate redundancy values using triangles or quadranges. | triadic, quadrilateral | quadrilateral
+threshold | Minimum redundancy % required to assign an edge to the backbone. | Decimal value in range 0 - 1 | 0.02
+multiedges | Whether redundant edges and loops are included in the redundancy calculations. | yes,no | no
+connectivity | Whether minimal non-backbone edges should be retained to connect backbone components. | maintain,ignore | maintain
+prune | Whether non-backbone edges should be included in the output. | yes,no | yes
+outputlist | Filename where the output should be written | Valid path/filename | backbone.csv
+
+
