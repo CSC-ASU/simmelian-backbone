@@ -19,7 +19,7 @@ The code depends on the following implementations:
 * [Pandas](https://pandas.pydata.org/) 1.4.3
 
 ## Running the Code
-The code assumes as input an edgelist in .csv format. The first two columns of the .csv must contain two node labels that define the edge. Additional columns may contain additional edge-related atrributes (such as weight) but these are not considered in the calculations. The script will output all of the edges' input values with calculated backbone values added.
+The code assumes as input an edgelist in .csv format. The first two columns of the .csv must contain two node labels that define the edge. Additional columns may contain edge-related atrributes (such as weight) but these are not considered in the calculations. The script will output all of the edges' input values with calculated backbone strength and inclusion values added.
 To run the script:
 >python3 backbone.py [--argument1=value, --argument2=value ...]
 
