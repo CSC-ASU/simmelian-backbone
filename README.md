@@ -11,15 +11,14 @@ Prior to this implementation, the analysis was only available in [Visone](https:
 
 Code written by [Suraj J. Unni](https://github.com/surajjunni). Specifications and testing by [Steve Corman](https://github.com/networks1). We thank [Julian Müller](https://sn.ethz.ch/profile.html?persid=243533) and [Ulrik Brandes](https://github.com/ubrandes-ethz) of the Visone team for sharing code and consulting about implementing the method.
 
-## Dependencies
-The code depends on the following implementations:
+## Environment
 * Python 3.8
 * [NetworKit](https://networkit.github.io/) 7.1
 * [Numpy](https://pypi.org/project/numpy/) 1.23.0
 * [Pandas](https://pandas.pydata.org/) 1.4.3
 
 ## Running the Code
-The code assumes as input an edgelist in .csv format. The first two columns of the .csv must contain two node labels that define the edge. Additional columns may contain edge-related atrributes (such as weight) but these are not considered in the calculations. The script will output all of the edges' input values with calculated backbone strength and inclusion values added.
+The code assumes as input an undirected edgelist in .csv format. The first two columns of the .csv must contain node labels that define the edge. Additional columns may contain edge-related atrributes (such as weight) but these are not considered in the calculations. The script will output all of the edges' input values with calculated backbone strength and inclusion values added.
 To run the script:
 >python3 backbone.py [--argument1=value, --argument2=value ...]
 
