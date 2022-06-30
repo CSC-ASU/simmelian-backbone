@@ -73,6 +73,7 @@ def redundancy(data,method,multiedges,connectivity,threshold,df,prune,outputfile
            c+=1   
     
     inv_map = {v: k for k, v in node.items()}
+    df1=df.copy(deep=True)
     df=df.applymap(lambda s: node.get(s) if s in node else s)
 
     data=df.values.tolist()
@@ -181,8 +182,35 @@ def redundancy(data,method,multiedges,connectivity,threshold,df,prune,outputfile
           backbone[k]=True
         else:
           backbone[k]=False
-    #storing in a csv file
+
+    col5=[]
+    col6=[]
+    for i in range(len(df1)):
+        key=(node[df1.iloc[i,0]],node[df1.iloc[i,1]])
+        key1=(node[df1.iloc[i,1]],node[df1.iloc[i,0]])
+        if(key1 in edgeResult.keys()): 
+           col5.append(edgeResult[key1])
+        elif(node[df1.iloc[i,0]]==node[df1.iloc[i,1]]):
+             col5.append(1)
+        else: 
+           col5.append(edgeResult[key])
+        if(key in backbone.keys()): 
+           col6.append(backbone[key])
+        elif(node[df1.iloc[i,0]]==node[df1.iloc[i,1]]):
+             col6.append(False)
+        else: 
+           col6.append(backbone[key1])
     
+    df1["redundancy (quadrilateral)"]=pd.Series(col5)
+    df1["backbone"]=pd.Series(col6)
+    
+    if(prune=="yes"):
+        print("pruning")
+        df1 = df1[df1['backbone'] == True]
+    print("saving file")     
+    df1.to_csv(outputfile,index=False)      
+    #storing in a csv file
+    """
     col1=[]
     col2=[]
     col3=[]
@@ -214,6 +242,7 @@ def redundancy(data,method,multiedges,connectivity,threshold,df,prune,outputfile
         df1 = df1[df1['backbone'] == True]
     print("saving file")     
     df1.to_csv(outputfile,index=False)
+    """
 
 if __name__ == "__main__":
     start_time = time.time()
