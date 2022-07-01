@@ -18,14 +18,14 @@ Code written by [Suraj J. Unni](https://github.com/surajjunni). Specifications a
 * [Pandas](https://pandas.pydata.org/) 1.4.3
 
 ## Running the Code
-The code assumes as input an undirected edgelist in .csv format. The first two columns of the .csv must contain node labels that define the edge. Additional columns may contain edge-related atrributes (such as weight) but these are not considered in the calculations. The script will output all of the edges' input values with calculated backbone strength and inclusion values added.
+The script will output all of the edges' input values with calculated backbone strength and inclusion values added.
 To run the script:
 >python3 backbone.py [--argument1=value, --argument2=value ...]
 
 Where:
 Argument | Description | Options | Default
 --- | --- | --- | ---
-edgelist | File containing the input edgelist formatted as discussed above. Analysis assumes that the network is undirected. | Valid path/filename | input.csv
+edgelist | File containing the input edgelist in ,csv format. Analysis assumes that the network is undirected. The first row must contain a header. The first two columns must contain node labels that define the edges. Additional columns may contain edge-related atrributes (such as weight) but these are not considered in the calculations. | Valid path/filename | input.csv
 method | Option to calculate redundancy values using triangles or quadranges. | triadic, quadrilateral | quadrilateral
 threshold | Minimum redundancy required to include an edge in the backbone. | Decimal value in range 0 - 1 | 0.2
 multiedges | Whether redundant edges and loops are to be included in the redundancy calculations. | yes,no | no
