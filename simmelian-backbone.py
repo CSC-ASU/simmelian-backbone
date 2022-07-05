@@ -185,22 +185,22 @@ def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
     #storing in a csv file
     col5=[]
     col6=[]
-    for i in range(len(df1)):
-        key=(node[df1.iloc[i,0]],node[df1.iloc[i,1]])
-        key1=(node[df1.iloc[i,1]],node[df1.iloc[i,0]])
+    #col6=np.array(col6,dtype="bool")
+    #print(edgeResult)
+    for index,row in df1.iterrows():
+        key=(node[row['node1']],node[row['node2']])
+        key1=(node[row['node2']],node[row['node1']])
+        #print(key,key1)
         if(key1 in edgeResult.keys()): 
            col5.append(edgeResult[key1])
-        elif(node[df1.iloc[i,0]]==node[df1.iloc[i,1]]):
+           col6.append(backbone[key1])
+        elif(node[row['node1']]==node[row['node2']]):
              col5.append(1)
-        else: 
-           col5.append(edgeResult[key])
-        if(key in backbone.keys()): 
-           col6.append(backbone[key])
-        elif(node[df1.iloc[i,0]]==node[df1.iloc[i,1]]):
              col6.append(False)
         else: 
-           col6.append(backbone[key1])
-    
+            col5.append(edgeResult[key])
+            col6.append(backbone[key])
+    #print(col5,col6)
     df1["redundancy (quadrilateral)"]=pd.Series(col5)
     df1["backbone"]=pd.Series(col6)
     
