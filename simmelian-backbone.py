@@ -15,7 +15,7 @@ from multiprocessing import Process
 def getEdgeQuadranglesMap(graph,edgeresult):
         if(edgeresult!= None):
             mp=dict()
-            #print(len(graph.edges()))
+            #print(graph.numberOfEdges())
             for ec in graph.iterEdges():
                 #print(ec)
                 mp[ec]=edgeresult[graph.edgeId(ec[0],ec[1])]
@@ -59,7 +59,7 @@ def union(vertice1, vertice2,parent,rank):
         if rank[root1] == rank[root2]:
             rank[root2] += 1 
 
-def redundancy(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
+def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
 
     #mapping nodes
     node=dict()
@@ -71,20 +71,20 @@ def redundancy(data,method,multiedges,connectivity,threshold,df,prune,outputfile
         if(i[1] not in node.keys() ):
            node[i[1]]=c
            c+=1   
-    
+    #print(len(node.keys()))
     inv_map = {v: k for k, v in node.items()}
     df1=df.copy(deep=True)
     df=df.applymap(lambda s: node.get(s) if s in node else s)
-
+    #print(len(df))
     data=df.values.tolist()
-    #print(len(data))
+    #print(data)
 
     #initialize graph
-    G=nk.graph.Graph(len(node.keys()),weighted=True)
+    G=nk.graph.Graph(len(node.keys()))
 
     #adding edges
     for i in range(len(data)):
-        G.addEdge(data[i][0],data[i][1],w=data[i][2]) 
+        G.addEdge(data[i][0],data[i][1]) 
 
     
     if(multiedges=="no"):
@@ -118,7 +118,7 @@ def redundancy(data,method,multiedges,connectivity,threshold,df,prune,outputfile
     reverseOrder(values)
     numEdges = mpercentage * G.numberOfEdges()
     threshold = getThresholdForNumEdges(values, numEdges)
-    
+    #print(threshold)
     unmst=dict()
     for i in G.iterEdges():
         unmst[i]=False
@@ -182,7 +182,7 @@ def redundancy(data,method,multiedges,connectivity,threshold,df,prune,outputfile
           backbone[k]=True
         else:
           backbone[k]=False
-
+    #storing in a csv file
     col5=[]
     col6=[]
     for i in range(len(df1)):
@@ -208,53 +208,19 @@ def redundancy(data,method,multiedges,connectivity,threshold,df,prune,outputfile
         print("pruning")
         df1 = df1[df1['backbone'] == True]
     print("saving file")     
-    df1.to_csv(outputfile,index=False)      
-    #storing in a csv file
-    """
-    col1=[]
-    col2=[]
-    col3=[]
-    col4=[]
-    col5=[]
-    col6=[]
-    #print(len(data))
-    for d,v in edgeResult.items():
-            col1.append(inv_map[d[0]])
-            col2.append(inv_map[d[1]])
-            #col2.append(d[1])
-            col4.append(G.edgeId(d[0],d[1]))
-            col3.append(G.weight(d[0],d[1]))
-            col5.append(v)
-            col6.append(backbone[d])
-        
-    #print(len(edgeResult.keys()))
-    #import pandas as pd
-    df1=pd.DataFrame()
-    df1["sourcenode"] = pd.Series(col1)
-    df1["endnode"] = pd.Series(col2)
-    df1["count"]=pd.Series(col3)
-    df1["id"]=pd.Series(col4)
-    df1["redundancy (quadrilateral)"]=pd.Series(col5)
-    df1["backbone"]=pd.Series(col6)
-    
-    if(prune=="yes"):
-        print("pruning")
-        df1 = df1[df1['backbone'] == True]
-    print("saving file")     
     df1.to_csv(outputfile,index=False)
-    """
 
 if __name__ == "__main__":
     start_time = time.time()
     warnings.filterwarnings("ignore")
     parser = optparse.OptionParser()
-    parser.add_option('--edgelist', action="store", dest="data", default="input.csv", type="string")
-    parser.add_option('--method', action="store", dest="method",choices=("triadic","quadrilateral"), default="quadrilateral")
+    parser.add_option('--edgelist', action="store", dest="data", default="input.txt", type="string")
+    parser.add_option('--method', action="store", dest="method",choices=("triadic","quadrilateral"), default="triadic")
     parser.add_option('--threshold', action="store", dest="mthreshold", default="0.2", type="string")
     parser.add_option('--multiedges', action="store", dest="multiedges",choices=("yes","no"),default="no")
     parser.add_option('--connectivity', action="store", dest="connectivity", choices=("maintain","ignore"),default="maintain")
     parser.add_option('--prune', action="store", dest="prune", choices=("yes","no"),default="no")
-    parser.add_option('--outputlist', action="store", dest="output", default="backbone.csv", type="string")
+    parser.add_option('--outputlist', action="store", dest="output", default="visone-quad-analysis.csv", type="string")
     options, args = parser.parse_args()
     
     path = options.data
@@ -266,7 +232,7 @@ if __name__ == "__main__":
     connectivity=options.connectivity
     prune=options.prune
     threshold=float(options.mthreshold)
-    t = Thread(target=redundancy, args=(data,method,multiedges,connectivity,threshold,df,prune,outputfile,))
+    t = Thread(target=func, args=(data,method,multiedges,connectivity,threshold,df,prune,outputfile,))
     #p = Process(target=func, args=(data,method,multiedges,connectivity,threshold,df,))
     #func(data,method,multiedges,connectivity,threshold,df)
     t.start()
