@@ -32,6 +32,6 @@ multiedges | Whether redundant edges and loops are to be included in the redunda
 connectivity | Whether non-backbone edges from a minimal spanning tree should be retained to connect backbone components. | maintain,ignore | maintain
 prune | Whether non-backbone edges should be excluded from the output. | yes,no | no
 outputlist | Filename where the output should be written. | Valid path/filename | backbone.csv
-verbose | If yes, prints the analysis steps and times to STDOUT, otherwise prints nothing. | yes,no | no
+verbose | Whether the script should print analysis steps and times to STDOUT. | yes,no | no
 
 
