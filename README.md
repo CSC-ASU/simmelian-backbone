@@ -27,7 +27,7 @@ Argument | Description | Options | Default
 --- | --- | --- | ---
 edgelist | File containing the input edgelist in .csv format. Analysis assumes that the network is undirected. The first row must contain a header. The first two columns must contain node labels that define the edges. Additional columns may contain edge-related atrributes (such as weight) but these are not considered in the calculations. | Valid path/filename | input.csv
 method | Option to calculate redundancy values using triangles or quadranges. | triadic, quadrilateral | quadrilateral
-threshold | Minimum redundancy required to include an edge in the backbone. | Decimal value in range 0 - 1 | 0.2
+threshold | Minimum redundancy proportion required to include an edge in the backbone. | Decimal value in range 0 - 1 | 0.2
 multiedges | Whether redundant edges and loops are to be included in the redundancy calculations. | yes,no | no
 connectivity | Whether non-backbone edges from a minimal spanning tree should be retained to connect backbone components. | maintain,ignore | maintain
 prune | Whether non-backbone edges should be excluded from the output. | yes,no | no
