@@ -5,7 +5,7 @@ This software implemenets a Simmelian backbone network analysis as described by 
 
 ![image](simmelian.jpg)
 
-Prior to this implementation, the analysis was only available in [Visone](https://visone.ethz.ch/), a GUI-based network analysis package. This Python implementation offers the same functionality for calculating the backbone as Visone, except as a stand-alone implementation that can be used for larger networks, in processing pipelines, etc.
+Prior to this implementation, the analysis was only available in [Visone](https://visone.ethz.ch/), a GUI-based network analysis package. This Python implementation offers the same functionality for calculating the backbone as Visone, except as a faster, stand-alone implementation that can be used for larger networks, in processing pipelines, etc.
 
 ## Credits
 
