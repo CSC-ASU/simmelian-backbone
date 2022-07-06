@@ -25,7 +25,7 @@ To run the script:
 Where:
 Argument | Description | Options | Default
 --- | --- | --- | ---
-edgelist | File containing the input edgelist in ,csv format. Analysis assumes that the network is undirected. The first row must contain a header. The first two columns must contain node labels that define the edges. Additional columns may contain edge-related atrributes (such as weight) but these are not considered in the calculations. | Valid path/filename | input.csv
+edgelist | File containing the input edgelist in .csv format. Analysis assumes that the network is undirected. The first row must contain a header. The first two columns must contain node labels that define the edges. Additional columns may contain edge-related atrributes (such as weight) but these are not considered in the calculations. | Valid path/filename | input.csv
 method | Option to calculate redundancy values using triangles or quadranges. | triadic, quadrilateral | quadrilateral
 threshold | Minimum redundancy required to include an edge in the backbone. | Decimal value in range 0 - 1 | 0.2
 multiedges | Whether redundant edges and loops are to be included in the redundancy calculations. | yes,no | no
