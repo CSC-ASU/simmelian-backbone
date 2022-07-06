@@ -59,7 +59,7 @@ def union(vertice1, vertice2,parent,rank):
         if rank[root1] == rank[root2]:
             rank[root2] += 1 
 
-def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
+def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile,verbose):
 
     #mapping nodes
     node=dict()
@@ -88,23 +88,35 @@ def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
 
     
     if(multiedges=="no"):
-        print("Removed multiedges")
+        t= time.time()
         G.removeMultiEdges()
-    
+        if(verbose=="yes"):
+            print("removing multiedges")
+            print("--- %s seconds ---" % (time.time() - t))
+
     #removing self loops
     G.removeSelfLoops()
+    
 
     #indexing the edges
     G.indexEdges()
     
     #normalized quadrangle scores for edges
     if(method =="quadrilateral"): 
-        print("Quadrangle score")
+        t= time.time()
         edgeResult1=nk.sparsification.QuadrilateralSimmelianSparsifier().scores(G)
+        if(verbose=="yes"):
+           print("Quadrangle score")
+           print("--- %s seconds ---" % (time.time() - t))
+           
 
     else:
-        print("Trianglescore")
-        edgeResult1=nk.sparsification.TriangleSparsifier().scores(G)             
+        t= time.time()
+        edgeResult1=nk.sparsification.TriangleSparsifier().scores(G)
+        if(verbose=="yes"):
+           print("Triangle score")
+           print("--- %s seconds ---" % (time.time() - t))
+           
 
     #creating map for edges and nodes
     #print(edgeResult1)
@@ -122,9 +134,8 @@ def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
     unmst=dict()
     for i in G.iterEdges():
         unmst[i]=False
-
+    t = time.time()
     if(connectivity=="maintain"):
-        print("connectivity")
         z2=[]
         z2=np.array(z2)
         for e,v in edgeResult.items():
@@ -170,8 +181,9 @@ def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
             val=[i[0],i[1]]
             if(eu.count(val)):
                 unmst[i]=True
-
-
+    if(verbose=="yes"):
+       print("connectivity")
+       print("--- %s seconds ---" % (time.time() - t)) 
     #unmst=getEdgeQuadranglesMap(G,unmst)
     #backbone checking
     backbone=dict()
@@ -183,6 +195,7 @@ def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
         else:
           backbone[k]=False
     #storing in a csv file
+    t=time.time()
     col5=[]
     col6=[]
     #col6=np.array(col6,dtype="bool")
@@ -208,9 +221,12 @@ def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
     df1["backbone"]=pd.Series(col6)
     
     if(prune=="yes"):
-        print("pruning")
+        if(verbose=="yes"):
+           print("pruning")
         df1 = df1[df1['backbone'] == True]
-    print("saving file")     
+    if(verbose=="yes"):
+       print("saving file")
+       print("--- %s seconds ---" % (time.time() - t))     
     df1.to_csv(outputfile,index=False)
 
 if __name__ == "__main__":
@@ -218,12 +234,13 @@ if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     parser = optparse.OptionParser()
     parser.add_option('--edgelist', action="store", dest="data", default="input.csv", type="string")
-    parser.add_option('--method', action="store", dest="method",choices=("triadic","quadrilateral"), default="triadic")
+    parser.add_option('--method', action="store", dest="method",choices=("triadic","quadrilateral"), default="quadrilateral")
     parser.add_option('--threshold', action="store", dest="mthreshold", default="0.2", type="string")
     parser.add_option('--multiedges', action="store", dest="multiedges",choices=("yes","no"),default="no")
     parser.add_option('--connectivity', action="store", dest="connectivity", choices=("maintain","ignore"),default="maintain")
     parser.add_option('--prune', action="store", dest="prune", choices=("yes","no"),default="no")
     parser.add_option('--outputlist', action="store", dest="output", default="backbone.csv", type="string")
+    parser.add_option('--verbose', action="store", dest="verbose",choices=("yes","no"), default="no")
     options, args = parser.parse_args()
     
     path = options.data
@@ -234,10 +251,12 @@ if __name__ == "__main__":
     multiedges=options.multiedges
     connectivity=options.connectivity
     prune=options.prune
+    verbose=options.verbose
     threshold=float(options.mthreshold)
-    t = Thread(target=func, args=(data,method,multiedges,connectivity,threshold,df,prune,outputfile,))
+    t = Thread(target=func, args=(data,method,multiedges,connectivity,threshold,df,prune,outputfile,verbose,))
     #p = Process(target=func, args=(data,method,multiedges,connectivity,threshold,df,))
     #func(data,method,multiedges,connectivity,threshold,df)
     t.start()
     t.join()
-    #print("--- %s seconds ---" % (time.time() - start_time))
+    if(verbose=="yes"):
+       print("--- Total time taken: %s ---" % (time.time() - start_time))
