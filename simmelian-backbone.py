@@ -186,15 +186,18 @@ def func(data,method,multiedges,connectivity,threshold,df,prune,outputfile):
     col5=[]
     col6=[]
     #col6=np.array(col6,dtype="bool")
+    ind1=df1.columns[0]
+    ind2=df1.columns[1]
     #print(edgeResult)
     for index,row in df1.iterrows():
-        key=(node[row['node1']],node[row['node2']])
-        key1=(node[row['node2']],node[row['node1']])
+        #print(row[0],row[1])
+        key=(node[row[ind1]],node[row[ind2]])
+        key1=(node[row[ind2]],node[row[ind1]])
         #print(key,key1)
         if(key1 in edgeResult.keys()): 
            col5.append(edgeResult[key1])
            col6.append(backbone[key1])
-        elif(node[row['node1']]==node[row['node2']]):
+        elif(node[row[ind1]]==node[row[ind2]]):
              col5.append(1)
              col6.append(False)
         else: 
@@ -214,13 +217,13 @@ if __name__ == "__main__":
     start_time = time.time()
     warnings.filterwarnings("ignore")
     parser = optparse.OptionParser()
-    parser.add_option('--edgelist', action="store", dest="data", default="input.txt", type="string")
+    parser.add_option('--edgelist', action="store", dest="data", default="input.csv", type="string")
     parser.add_option('--method', action="store", dest="method",choices=("triadic","quadrilateral"), default="triadic")
     parser.add_option('--threshold', action="store", dest="mthreshold", default="0.2", type="string")
     parser.add_option('--multiedges', action="store", dest="multiedges",choices=("yes","no"),default="no")
     parser.add_option('--connectivity', action="store", dest="connectivity", choices=("maintain","ignore"),default="maintain")
     parser.add_option('--prune', action="store", dest="prune", choices=("yes","no"),default="no")
-    parser.add_option('--outputlist', action="store", dest="output", default="visone-quad-analysis.csv", type="string")
+    parser.add_option('--outputlist', action="store", dest="output", default="backbone.csv", type="string")
     options, args = parser.parse_args()
     
     path = options.data
